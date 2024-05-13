@@ -1,6 +1,67 @@
-@ProjetoControleMesas_HostAddress = http://localhost:5270
+@HostAddress = http://localhost:5270/api
 
-GET {{ProjetoControleMesas_HostAddress}}/weatherforecast/
-Accept: application/json
+### Cadastro de cliente
+POST {{HostAddress}}/cliente/cadastrar
+Content-Type: application/json
 
-###
+{
+    "nome" : "",
+    "descricao" : "",
+}
+
+### Visualização dos clientes cadastrados
+GET {{HostAddress}}/cliente/listar
+
+
+### Atualização de dados do Cliente
+PUT {{HostAddress}}/cliente/atualizar/id-do-cliente-aqui
+Content-Type: application/json
+
+{
+    "nome" : "",
+    "descricao" : "",
+}
+
+
+### Cadastro de mesas
+POST {{HostAddress}}/mesas/cadastrar
+Content-Type: application/json
+
+{
+    "nome" : "",
+    "descricao" : "",
+}
+
+### Cadastro de estabelecimento
+POST {{HostAddress}}/estabelecimento/cadastrar
+Content-Type: application/json
+
+{
+    "nome" : "",
+    "descricao" : "",
+}
+
+### Cadastro de modalidades de mesa
+POST {{HostAddress}}/modalidade-mesa/cadastrar
+Content-Type: application/json
+
+{
+    "nome" : "",
+    "descricao" : "",
+}
+
+### Visualização de status das mesas
+GET {{HostAddress}}/mesas/listar
+
+
+### Atualização de status da mesa (Ocupada, Livre ou Reservada) 
+PUT {{HostAddress}}/mesas/id-da-mesa-aqui/status
+Content-Type: application/json
+
+{
+    "status" : "",
+}
+
+### Remoção de Mesa Cadastrada
+DELETE {{HostAddress}}/mesas/deletar/id-da-mesa-aqui
+

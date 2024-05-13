@@ -1,44 +1,67 @@
+using System.ComponentModel.DataAnnotations;
+//using ProjetoControleMesas.Models;
+using Microsoft.AspNetCore.Mvc;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddDbContext<AppDataContext>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+//Cadastro de clierntes
+app.MapPost("/api/cliente/cadastrar", () => 
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
-app.UseHttpsRedirection();
+});
 
-var summaries = new[]
+//Visualização de clientes
+app.MapGet("/api/cliente/listar", () => 
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
 
-app.MapGet("/weatherforecast", () =>
+});
+
+//Atualização de dados do Cliente
+app.MapPut("/api/cliente/atualizar/{id}", () => 
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+
+});
+
+//Cadastro de mesas
+app.MapPost("/api/mesas/cadastrar", () => 
+{
+
+});
+
+//Cadastro de estabelecimento
+app.MapPost("/api/estabelecimento/cadastrar", () => 
+{
+
+});
+
+//Cadastro de modalidades de mesa
+app.MapPost("/api/modalidade-mesa/cadastrar", () => 
+{
+
+});
+
+//Visualização de status das mesas
+app.MapGet("/api/mesas/listar", () => 
+{
+
+});
+
+//Atualização de status da mesa (Ocupada, Livre ou Reservada)
+app.MapPut("/api/mesas/{id}/status", () => 
+{
+
+});
+
+//Remoção de Mesa Cadastrada
+app.MapDelete("/api/mesas/deletar/{id}", () => 
+{
+
+});
+
+
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
