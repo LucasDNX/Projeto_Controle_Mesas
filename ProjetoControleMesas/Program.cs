@@ -11,7 +11,7 @@ var app = builder.Build();
 //Cadastro de clierntes
 app.MapPost("/api/cliente/cadastrar", () => 
 {
-
+    string Teste = "Wello word!";
 });
 
 //Visualização de clientes
