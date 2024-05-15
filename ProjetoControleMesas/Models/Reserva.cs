@@ -10,29 +10,20 @@ public class Reserva
         Id = Guid.NewGuid().ToString();
     }
 
-    public Reserva(Estabelecimento estabelecimento, DateTime datahora, int ocupantes, Mesa mesa, Cliente cliente)
+    public Reserva( DateTime datahora, int ocupantes)
     {
-        Estabelecimento = estabelecimento;
         DataHora = datahora;
         Ocupantes = ocupantes;
-        Mesa = mesa;  
-        Cliente = cliente;
         Id = Guid.NewGuid().ToString();
     }
 
     
     public string? Id { get; set; }
-    
-    public Estabelecimento Estabelecimento { get; set; }
 
     public DateTime DataHora { get; set;}
 
     public int Ocupantes { get; set; }
 
-    public Mesa Mesa { get; set; }
-
-    public Cliente Cliente { get; set; }
-    
     public DateTime CriadoEm { get; set; }
 
 }
