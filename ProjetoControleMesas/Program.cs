@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 //using ProjetoControleMesas.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProjetoControleMesas;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//builder.Services.AddDbContext<AppDataContext>();
+builder.Services.AddDbContext<DbContext>();
 
 var app = builder.Build();
 
