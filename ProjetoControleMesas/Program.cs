@@ -66,8 +66,24 @@ app.MapPut("/api/cliente/atualizar/{id}", () =>
 });
 
 //Cadastro de mesas
-app.MapPost("/api/mesas/cadastrar", () => 
+app.MapPost("/api/mesas/cadastrar", ([FromBody] Mesa mesa, [FromServices] AppDbContext context) => 
 {
+    List<ValidationResult> erros = new List<ValidationResult>();
+    if (!Validator.TryValidateObject(mesa, new ValidationContext(mesa), erros, true))
+    {
+        return Results.BadRequest(erros);
+    }
+
+    Mesa? mesaBuscado = context.Mesas.FirstOrDefault(x =>
+        x.Id == mesa.Id);
+
+    if (mesaBuscado is null)
+    {
+        context.Mesas.Add(mesa);
+        context.SaveChanges();
+        return Results.Created($"/api/produto/buscar/{mesa.Id}", mesa);
+    }
+    return Results.BadRequest("Já existe uma mesa criada para este ID");
 
 });
 
