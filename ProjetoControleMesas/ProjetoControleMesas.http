@@ -5,8 +5,9 @@ POST {{HostAddress}}/cliente/cadastrar
 Content-Type: application/json
 
 {
-    "nome" : "",
-    "descricao" : "",
+    "nome" : "teste",
+    "endereco" : "testerua",
+    "telefone" : "999999999"
 }
 
 ### Visualização dos clientes cadastrados
