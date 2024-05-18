@@ -24,8 +24,8 @@ public class Estabelecimento
     
     [Required(ErrorMessage = "Este campo é obrigatório!")]
     public string Nome { get; set; }
-
-    public string? Endereco { get; set; }
+    [Required(ErrorMessage = "Este campo é obrigatório!")]
+    public string Endereco { get; set; }
     
     public DateTime CriadoEm { get; set; }
 
