@@ -32,8 +32,8 @@ POST {{HostAddress}}/mesas/cadastrar
 Content-Type: application/json
 
 {
-    "nome" : "",
-    "descricao" : "",
+    "id" : "01",
+    "capacidade" : 6
 }
 
 ### Cadastro de estabelecimento
