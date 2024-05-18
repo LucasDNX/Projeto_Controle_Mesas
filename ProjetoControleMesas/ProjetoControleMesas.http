@@ -1,4 +1,5 @@
 @HostAddress = http://localhost:5270/api
+@idcliente = 7a8ffce5-c551-47d0-b5e2-41d89c30e2ea
 
 ### Cadastro de cliente
 POST {{HostAddress}}/cliente/cadastrar
@@ -13,6 +14,8 @@ Content-Type: application/json
 ### Visualização dos clientes cadastrados
 GET {{HostAddress}}/cliente/listar
 
+### Buscar clientes
+GET {{HostAddress}}/cliente/buscar/{{idcliente}}
 
 ### Atualização de dados do Cliente
 PUT {{HostAddress}}/cliente/atualizar/id-do-cliente-aqui
