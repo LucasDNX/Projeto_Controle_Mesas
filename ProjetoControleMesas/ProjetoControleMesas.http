@@ -41,8 +41,8 @@ POST {{HostAddress}}/estabelecimento/cadastrar
 Content-Type: application/json
 
 {
-    "nome" : "",
-    "descricao" : "",
+    "nome" : "testeEstabelecimento3",
+    "endereco" : ""
 }
 
 ### Cadastro de modalidades de mesa

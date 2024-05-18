@@ -72,9 +72,26 @@ app.MapPost("/api/mesas/cadastrar", () =>
 });
 
 //Cadastro de estabelecimento
-app.MapPost("/api/estabelecimento/cadastrar", () => 
+app.MapPost("/api/estabelecimento/cadastrar", ([FromBody] Estabelecimento estabelecimento,
+    [FromServices] AppDbContext context) =>
 {
+    List<ValidationResult> erros = new List<ValidationResult>();
+    if (!Validator.TryValidateObject(
+            estabelecimento, new ValidationContext(estabelecimento), erros, true))
+    {
+        return Results.BadRequest(erros);
+    }
+    Estabelecimento? EstabelecimentoBuscado = context.Estabelecimentos.FirstOrDefault(x =>
+        x.Nome == estabelecimento.Nome);
 
+    if (EstabelecimentoBuscado is null)
+    {
+        estabelecimento.Nome = estabelecimento.Nome.ToUpper();
+        context.Estabelecimentos.Add(estabelecimento);
+        context.SaveChanges();
+        return Results.Created("Estabelecimento criado com sucesso", estabelecimento);
+    }
+    return Results.BadRequest("Estabelecimento ja existente. ");
 });
 
 //Cadastro de modalidades de mesa
