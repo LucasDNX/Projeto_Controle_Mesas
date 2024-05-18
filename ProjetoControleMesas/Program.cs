@@ -6,7 +6,7 @@ using ProjetoControleMesas;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DbContext>();
+builder.Services.AddDbContext<AppDbContext>();
 
 var app = builder.Build();
 
@@ -41,9 +41,9 @@ app.MapPost("/api/estabelecimento/cadastrar", () =>
 });
 
 //Cadastro de modalidades de mesa
-app.MapPost("/api/modalidade-mesa/cadastrar", () => 
+app.MapPost("/api/modalidade-mesa/cadastrar", ([FromServices] AppDbContext context) => 
 {
-
+    
 });
 
 //Visualização de status das mesas
