@@ -10,17 +10,36 @@ builder.Services.AddDbContext<DbContext>();
 
 var app = builder.Build();
 
-//Cadastro de clierntes
-app.MapPost("/api/cliente/cadastrar", () => 
+//Cadastro de clientes
+app.MapPost("/api/cliente/cadastrar", ([FromBody] Cliente cliente,
+    [FromServices] AppDbContext context) =>
 {
-    string Teste = "Wello word!";
+    //Validando os atributos do cliente
+    List<ValidationResult> erros = new List<ValidationResult>();
+    if (!Validator.TryValidateObject(
+            cliente, new ValidationContext(cliente), erros, true))
+    {
+        return Results.BadRequest(erros);
+    }
+
+    Cliente? buscarCliente = context.Clientes.FirstOrDefault(x =>
+        x.Id == cliente.Id);
+
+    if (buscarCliente is null)
+    {
+        cliente.Nome = cliente.Nome.ToUpper();
+        context.Clientes.Add(cliente);
+        context.SaveChanges();
+        return Results.Created($"/api/cliente/buscar/{cliente.Id}", cliente);
+    }
+    return Results.BadRequest("O clinte já encontra-se cadastrado");
 });
 
 //Visualização de clientes
 app.MapGet("/api/cliente/listar", () => 
-{
+    {
 
-});
+    });
 
 //Atualização de dados do Cliente
 app.MapPut("/api/cliente/atualizar/{id}", () => 
