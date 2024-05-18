@@ -36,9 +36,27 @@ app.MapPost("/api/cliente/cadastrar", ([FromBody] Cliente cliente,
 });
 
 //Visualização de clientes
-app.MapGet("/api/cliente/listar", () => 
+app.MapGet("/api/cliente/listar", ([FromServices] AppDbContext context) =>
     {
+        if (context.Clientes.Any())
+        {
+            return Results.Ok(context.Clientes.ToList());
+        }
+        return Results.NotFound("Cliente não encontrado");
+    });
 
+//Busca pelo Cliente pelo Id
+app.MapGet("/api/cliente/buscar/{id}", ([FromRoute] string id,
+        [FromServices] AppDbContext context) =>
+    {
+        //Endpoint com várias linhas de código
+        Cliente? cliente = context.Clientes.FirstOrDefault(x => x.Id == id);
+
+        if (cliente is null)
+        {
+            return Results.NotFound("Cliente não encontrado!");
+        }
+        return Results.Ok(cliente);
     });
 
 //Atualização de dados do Cliente
