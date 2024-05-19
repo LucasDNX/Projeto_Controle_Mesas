@@ -143,11 +143,25 @@ app.MapGet("/api/mesas/listar", () =>
 
 });
 
-//Atualização de status da mesa (Ocupada, Livre ou Reservada)
-app.MapPut("/api/mesas/{id}/status", () => 
-{
 
+//Atualização de status da mesa (Ocupada ou Livre)
+app.MapPut("/api/mesas/atualiza/status/{id}", ([FromRoute] string id, [FromServices] AppDbContext context) => 
+{
+    Mesa? mesa = context.Mesas.FirstOrDefault(m => m.Id.ToString() == id.ToString());
+
+    if (mesa is null)
+    {
+        return Results.NotFound("Mesa não encontrada!");
+    }
+
+    mesa.Status = mesa.Status == "Livre" ? "Ocupada" : "Livre";
+
+    context.Mesas.Update(mesa);
+    context.SaveChanges();
+
+    return Results.Ok($"Status da mesa atualizado com sucesso! Status da mesa: {mesa.Status}");
 });
+
 
 //Remoção de Mesa Cadastrada
 app.MapDelete("/api/mesa/deletar/{id}", ([FromRoute] string id,
