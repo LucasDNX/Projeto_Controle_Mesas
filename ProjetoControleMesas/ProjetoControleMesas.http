@@ -1,40 +1,5 @@
 @HostAddress = http://localhost:5270/api
-@idcliente = 83d244a7-bf3f-4e74-b95c-77529c594e50
 
-### Cadastro de cliente
-POST {{HostAddress}}/cliente/cadastrar
-Content-Type: application/json
-
-{
-    "nome" : "Bruno",
-    "endereco" : "Formosa do oeste 321",
-    "telefone" : "4198453-3254"
-}
-
-### Visualização dos clientes cadastrados
-GET {{HostAddress}}/cliente/listar
-
-### Buscar clientes
-GET {{HostAddress}}/cliente/buscar/{{idcliente}}
-
-### Atualização de dados do Cliente
-PUT {{HostAddress}}/cliente/atualizar/{{idcliente}}
-Content-Type: application/json
-
-{
-    "Nome" : "Bruna",
-    "Endereco" : "Genésio Moreschi 190",
-    "Telefone" : "4198453-3415"
-}
-
-### Cadastro de mesas
-POST {{HostAddress}}/mesas/cadastrar
-Content-Type: application/json
-
-{
-    "id" : "05",
-    "capacidade" : 8
-}
 
 ### Cadastro de estabelecimento
 POST {{HostAddress}}/estabelecimento/cadastrar
@@ -45,23 +10,73 @@ Content-Type: application/json
     "endereco" : "rua da graciosa 251"
 }
 
+
+### Cadastro de cliente
+POST {{HostAddress}}/cliente/cadastrar
+Content-Type: application/json
+
+{
+    "nome" : "Pedro",
+    "endereco" : "Formosa do oeste 321",
+    "telefone" : "4198453-3432",
+    "estabelecimentoId" : 1
+}
+
+
+### Visualização dos clientes cadastrados
+GET {{HostAddress}}/cliente/listar
+
+
+### Buscar clientes
+GET {{HostAddress}}/cliente/buscar/1
+
+
+### Atualização de dados do Cliente
+PUT {{HostAddress}}/cliente/atualizar/1
+Content-Type: application/json
+
+{
+    "Nome" : "Bruna",
+    "Endereco" : "Genésio Moreschi 190",
+    "Telefone" : "4198453-5342"
+}
+
+
 ### Cadastro de modalidades de mesa
 POST {{HostAddress}}/modalidade-mesa/cadastrar
 Content-Type: application/json
 
 {
-    "Nome" : "Buffet"
+    "Nome" : "Buffet",
+    "estabelecimentoId" : 1
 }
+
+
+### Cadastro de mesas
+POST {{HostAddress}}/mesas/cadastrar
+Content-Type: application/json
+
+{
+    "id" : "01",
+    "capacidade" : 4,
+    "estabelecimentoId" : 1,
+    "modalidadeId" : 1
+}
+
+
 
 ### Lista de mesas registradas
 GET {{HostAddress}}/mesas/listar
 
-### Visualização da mesa seleciona
-GET {{HostAddress}}/mesas/status/03
+
+### Visualização de status da mesa seleciona
+GET {{HostAddress}}/mesas/status/5
+
 
 ### Atualização de status da mesa (Ocupada ou livre) 
-PUT {{HostAddress}}/mesas/atualiza/status/05
+PUT {{HostAddress}}/mesas/atualiza/status/5
+
 
 ### Remoção de Mesa Cadastrada
-DELETE {{HostAddress}}/mesa/deletar/01
+DELETE {{HostAddress}}/mesa/deletar/05
 

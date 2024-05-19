@@ -5,29 +5,19 @@ namespace ProjetoControleMesas;
 
 public class Estabelecimento
 {
-    public Estabelecimento()
-    {
-        Id = Guid.NewGuid().ToString();
-        CriadoEm = DateTime.Now;
-    }
+    public int Id { get; set; }
 
-    public Estabelecimento(string nome, string endereco)
-    {
-        Id = Guid.NewGuid().ToString();
-        Nome = nome;
-        Endereco = endereco;
-        CriadoEm = DateTime.Now;
-    }
-
-    
-    public string? Id { get; set; }
-    
     [Required(ErrorMessage = "Este campo é obrigatório!")]
-    public string Nome { get; set; }
-    [Required(ErrorMessage = "Este campo é obrigatório!")]
-    public string Endereco { get; set; }
-    
-    public DateTime CriadoEm { get; set; }
+    public string? Nome { get; set; }
 
+    [Required(ErrorMessage = "Este campo é obrigatório!")]
+    public string? Endereco { get; set; }
+
+    public DateTime CriadoEm { get; set; } = DateTime.Now;
+
+    //
+    //public ICollection<Cliente> Clientes { get; set; }
+    //public ICollection<Mesa> Mesas { get; set; }
+    //public ICollection<Modalidade> Modalidades { get; set; }
 }
 
