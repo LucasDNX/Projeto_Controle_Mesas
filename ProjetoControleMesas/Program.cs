@@ -23,16 +23,16 @@ app.MapPost("/api/cliente/cadastrar", ([FromBody] Cliente cliente,
     }
 
     Cliente? buscarCliente = context.Clientes.FirstOrDefault(x =>
-        x.Id == cliente.Id);
+        x.Telefone == cliente.Telefone);
 
     if (buscarCliente is null)
     {
         cliente.Nome = cliente.Nome.ToUpper();
         context.Clientes.Add(cliente);
         context.SaveChanges();
-        return Results.Created($"/api/cliente/buscar/{cliente.Id}", cliente);
+        return Results.Created($"/api/cliente/buscar/{cliente.Telefone}", cliente);
     }
-    return Results.BadRequest("O clinte já encontra-se cadastrado");
+    return Results.BadRequest("O número já encontra-se cadastrado");
 });
 
 //Visualização de clientes
@@ -49,7 +49,7 @@ app.MapGet("/api/cliente/listar", ([FromServices] AppDbContext context) =>
 app.MapGet("/api/cliente/buscar/{id}", ([FromRoute] string id,
         [FromServices] AppDbContext context) =>
     {
-       
+
         Cliente? cliente = context.Clientes.FirstOrDefault(x => x.Id == id);
 
         if (cliente is null)
@@ -60,7 +60,7 @@ app.MapGet("/api/cliente/buscar/{id}", ([FromRoute] string id,
     });
 
 //Atualização de dados do Cliente
-app.MapPut("/api/cliente/atualizar/{Id}", ([FromRoute] String id,[FromBody] Cliente clienteAtualizado,[FromServices] AppDbContext context) => 
+app.MapPut("/api/cliente/atualizar/{Id}", ([FromRoute] String id, [FromBody] Cliente clienteAtualizado, [FromServices] AppDbContext context) =>
 {
     Cliente? clienteExistente = context.Clientes.FirstOrDefault(c => c.Id == id);
     if (clienteExistente == null)
@@ -68,10 +68,17 @@ app.MapPut("/api/cliente/atualizar/{Id}", ([FromRoute] String id,[FromBody] Clie
         return Results.NotFound("Cliente nao encontrado");
     }
 
+    //Validar os atributos do cliente atualizado     
+    List<ValidationResult> erros = new List<ValidationResult>();
+    if (!Validator.TryValidateObject(clienteAtualizado,
+    new ValidationContext(clienteAtualizado), erros, true))
+    {
+        return Results.BadRequest(erros);
+    }
     clienteExistente.Nome = clienteAtualizado.Nome;
     clienteExistente.Endereco = clienteAtualizado.Endereco;
     clienteExistente.Telefone = clienteAtualizado.Telefone;
-    
+
     context.Clientes.Update(clienteExistente);
     context.SaveChanges();
 
@@ -81,7 +88,7 @@ app.MapPut("/api/cliente/atualizar/{Id}", ([FromRoute] String id,[FromBody] Clie
 
 
 //Cadastro de mesas
-app.MapPost("/api/mesas/cadastrar", ([FromBody] Mesa mesa, [FromServices] AppDbContext context) => 
+app.MapPost("/api/mesas/cadastrar", ([FromBody] Mesa mesa, [FromServices] AppDbContext context) =>
 {
     List<ValidationResult> erros = new List<ValidationResult>();
     if (!Validator.TryValidateObject(mesa, new ValidationContext(mesa), erros, true))
@@ -126,11 +133,10 @@ app.MapPost("/api/estabelecimento/cadastrar", ([FromBody] Estabelecimento estabe
 });
 
 //Cadastro de modalidades de mesa
-
-    app.MapPost("/api/modalidade-mesa/cadastrar", ([FromBody] Modalidade modalidade,
+app.MapPost("/api/modalidade-mesa/cadastrar", ([FromBody] Modalidade modalidade,
     [FromServices] AppDbContext context) =>
 {
-    //Validando os atributos do cliente
+    //Validando os atributos das Modalidade
     List<ValidationResult> erros = new List<ValidationResult>();
     if (!Validator.TryValidateObject(
             modalidade, new ValidationContext(modalidade), erros, true))
@@ -153,7 +159,7 @@ app.MapPost("/api/estabelecimento/cadastrar", ([FromBody] Estabelecimento estabe
 
 
 //Visualização das mesas registradas
-app.MapGet("/api/mesas/listar", ([FromServices] AppDbContext context) => 
+app.MapGet("/api/mesas/listar", ([FromServices] AppDbContext context) =>
 {
     if (context.Mesas.Any())
     {
@@ -167,7 +173,7 @@ app.MapGet("/api/mesas/listar", ([FromServices] AppDbContext context) =>
 app.MapGet("/api/mesas/status/{id}", ([FromRoute] string id, [FromServices] AppDbContext context) =>
 {
     Mesa? mesa = context.Mesas.FirstOrDefault(m => m.Id == id);
-        
+
     if (mesa is null)
     {
         return Results.NotFound("Mesa não encontrada!");
@@ -180,7 +186,7 @@ app.MapGet("/api/mesas/status/{id}", ([FromRoute] string id, [FromServices] AppD
 
 
 //Atualização de status da mesa (Ocupada ou Livre)
-app.MapPut("/api/mesas/atualiza/status/{id}", ([FromRoute] string id, [FromServices] AppDbContext context) => 
+app.MapPut("/api/mesas/atualiza/status/{id}", ([FromRoute] string id, [FromServices] AppDbContext context) =>
 {
     Mesa? mesa = context.Mesas.FirstOrDefault(m => m.Id.ToString() == id.ToString());
 
