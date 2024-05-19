@@ -32,8 +32,8 @@ POST {{HostAddress}}/mesas/cadastrar
 Content-Type: application/json
 
 {
-    "id" : "01",
-    "capacidade" : 6
+    "id" : "05",
+    "capacidade" : 8
 }
 
 ### Cadastro de estabelecimento
@@ -67,5 +67,5 @@ Content-Type: application/json
 }
 
 ### Remoção de Mesa Cadastrada
-DELETE {{HostAddress}}/mesas/deletar/id-da-mesa-aqui
+DELETE {{HostAddress}}/mesa/deletar/05
 

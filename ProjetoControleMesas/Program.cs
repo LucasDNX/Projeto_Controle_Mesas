@@ -49,7 +49,7 @@ app.MapGet("/api/cliente/listar", ([FromServices] AppDbContext context) =>
 app.MapGet("/api/cliente/buscar/{id}", ([FromRoute] string id,
         [FromServices] AppDbContext context) =>
     {
-        //Endpoint com várias linhas de código
+       
         Cliente? cliente = context.Clientes.FirstOrDefault(x => x.Id == id);
 
         if (cliente is null)
@@ -129,9 +129,18 @@ app.MapPut("/api/mesas/{id}/status", () =>
 });
 
 //Remoção de Mesa Cadastrada
-app.MapDelete("/api/mesas/deletar/{id}", () => 
+app.MapDelete("/api/mesa/deletar/{id}", ([FromRoute] string id,
+    [FromServices] AppDbContext context) =>
 {
+    Mesa? mesa = context.Mesas.FirstOrDefault(x => x.Id == id);
 
+    if (mesa is null)
+    {
+        return Results.NotFound("Mesa não encontrada!");
+    }
+    context.Mesas.Remove(mesa);
+    context.SaveChanges();
+    return Results.Ok("Mesa deletada");
 });
 
 
