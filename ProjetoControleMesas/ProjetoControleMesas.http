@@ -57,13 +57,8 @@ Content-Type: application/json
 GET {{HostAddress}}/mesas/listar
 
 
-### Atualização de status da mesa (Ocupada, Livre ou Reservada) 
-PUT {{HostAddress}}/mesas/id-da-mesa-aqui/status
-Content-Type: application/json
-
-{
-    "status" : "",
-}
+### Atualização de status da mesa (Ocupada ou livre) 
+PUT {{HostAddress}}/mesas/atualiza/status/03
 
 ### Remoção de Mesa Cadastrada
 DELETE {{HostAddress}}/mesa/deletar/05
