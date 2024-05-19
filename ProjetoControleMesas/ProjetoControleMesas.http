@@ -50,8 +50,7 @@ POST {{HostAddress}}/modalidade-mesa/cadastrar
 Content-Type: application/json
 
 {
-    "nome" : "",
-    "descricao" : "",
+    "Nome" : "Buffet"
 }
 
 ### Visualização de status das mesas

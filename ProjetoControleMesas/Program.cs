@@ -111,10 +111,31 @@ app.MapPost("/api/estabelecimento/cadastrar", ([FromBody] Estabelecimento estabe
 });
 
 //Cadastro de modalidades de mesa
-app.MapPost("/api/modalidade-mesa/cadastrar", ([FromServices] AppDbContext context) => 
+
+    app.MapPost("/api/modalidade-mesa/cadastrar", ([FromBody] Modalidade modalidade,
+    [FromServices] AppDbContext context) =>
 {
-    
+    //Validando os atributos do cliente
+    List<ValidationResult> erros = new List<ValidationResult>();
+    if (!Validator.TryValidateObject(
+            modalidade, new ValidationContext(modalidade), erros, true))
+    {
+        return Results.BadRequest(erros);
+    }
+
+    Modalidade? buscarModalidade = context.Modalidades.FirstOrDefault(x =>
+        x.Nome.ToUpper() == modalidade.Nome.ToUpper());
+
+    if (buscarModalidade is null)
+    {
+        modalidade.Nome = modalidade.Nome.ToUpper();
+        context.Modalidades.Add(modalidade);
+        context.SaveChanges();
+        return Results.Created($"/api/modalidade-mesa/buscar/{modalidade.Id}", modalidade);
+    }
+    return Results.BadRequest("A modalidade ja foi cadastrada.");
 });
+
 
 //Visualização de status das mesas
 app.MapGet("/api/mesas/listar", () => 
