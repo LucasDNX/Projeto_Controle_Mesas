@@ -137,11 +137,31 @@ app.MapPost("/api/estabelecimento/cadastrar", ([FromBody] Estabelecimento estabe
 });
 
 
-//Visualização de status das mesas
-app.MapGet("/api/mesas/listar", () => 
+//Visualização das mesas registradas
+app.MapGet("/api/mesas/listar", ([FromServices] AppDbContext context) => 
 {
-
+    if (context.Mesas.Any())
+    {
+        return Results.Ok(context.Mesas.ToList());
+    }
+    return Results.NotFound("Não existem mesas cadastradas!");
 });
+
+
+// Visualização do status da mesa selecionada
+app.MapGet("/api/mesas/status/{id}", ([FromRoute] string id, [FromServices] AppDbContext context) =>
+{
+    Mesa? mesa = context.Mesas.FirstOrDefault(m => m.Id == id);
+        
+    if (mesa is null)
+    {
+        return Results.NotFound("Mesa não encontrada!");
+    }
+
+    var result = new { Id = mesa.Id, Status = mesa.Status };
+    return Results.Ok(result);
+});
+
 
 
 //Atualização de status da mesa (Ocupada ou Livre)

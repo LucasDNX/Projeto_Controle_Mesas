@@ -53,8 +53,11 @@ Content-Type: application/json
     "Nome" : "Buffet"
 }
 
-### Visualização de status das mesas
+### Lista de mesas registradas
 GET {{HostAddress}}/mesas/listar
+
+### Visualização da mesa seleciona
+GET {{HostAddress}}/mesas/status/03
 
 
 ### Atualização de status da mesa (Ocupada ou livre) 
