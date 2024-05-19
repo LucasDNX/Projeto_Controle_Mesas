@@ -60,10 +60,25 @@ app.MapGet("/api/cliente/buscar/{id}", ([FromRoute] string id,
     });
 
 //Atualização de dados do Cliente
-app.MapPut("/api/cliente/atualizar/{id}", () => 
+app.MapPut("/api/cliente/atualizar/{Id}", ([FromRoute] String id,[FromBody] Cliente clienteAtualizado,[FromServices] AppDbContext context) => 
 {
+    Cliente? clienteExistente = context.Clientes.FirstOrDefault(c => c.Id == id);
+    if (clienteExistente == null)
+    {
+        return Results.NotFound("Cliente nao encontrado");
+    }
 
+    clienteExistente.Nome = clienteAtualizado.Nome;
+    clienteExistente.Endereco = clienteAtualizado.Endereco;
+    clienteExistente.Telefone = clienteAtualizado.Telefone;
+    
+    context.Clientes.Update(clienteExistente);
+    context.SaveChanges();
+
+    return Results.Ok(clienteExistente);
 });
+
+
 
 //Cadastro de mesas
 app.MapPost("/api/mesas/cadastrar", ([FromBody] Mesa mesa, [FromServices] AppDbContext context) => 

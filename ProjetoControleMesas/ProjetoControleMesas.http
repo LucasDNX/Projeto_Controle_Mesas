@@ -6,8 +6,8 @@ POST {{HostAddress}}/cliente/cadastrar
 Content-Type: application/json
 
 {
-    "nome" : "teste",
-    "endereco" : "testerua",
+    "nome" : "Cleber",
+    "endereco" : "ruatalnumerotal",
     "telefone" : "999999999"
 }
 
@@ -18,12 +18,13 @@ GET {{HostAddress}}/cliente/listar
 GET {{HostAddress}}/cliente/buscar/{{idcliente}}
 
 ### Atualização de dados do Cliente
-PUT {{HostAddress}}/cliente/atualizar/id-do-cliente-aqui
+PUT {{HostAddress}}/cliente/atualizar/{{idcliente}}
 Content-Type: application/json
 
 {
-    "nome" : "",
-    "descricao" : "",
+    "Nome" : "joser",
+    "Endereco" : "cassaasdasd",
+    "Telefone" : "123433"
 }
 
 
