@@ -7,6 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>();
 
+builder.Services.AddCors(options =>
+    options.AddPolicy("Acesso Total",
+        configs => configs
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod())
+);
+
 var app = builder.Build();
 
 
@@ -20,8 +28,9 @@ app.MapPost("/api/estabelecimento/cadastrar", ([FromBody] Estabelecimento estabe
     {
         return Results.BadRequest(erros);
     }
+
     Estabelecimento? EstabelecimentoBuscado = context.Estabelecimentos.FirstOrDefault(x =>
-        x.Nome == estabelecimento.Nome);
+        x.Nome.ToUpper() == estabelecimento.Nome.ToUpper());
 
     if (EstabelecimentoBuscado is null)
     {
@@ -32,6 +41,16 @@ app.MapPost("/api/estabelecimento/cadastrar", ([FromBody] Estabelecimento estabe
     }
     return Results.BadRequest("Estabelecimento ja existente. ");
 });
+
+//Visualização de estabelecimentos
+app.MapGet("/api/estabelecimento/listar", ([FromServices] AppDbContext context) =>
+    {
+        if (context.Estabelecimentos.Any())
+        {
+            return Results.Ok(context.Estabelecimentos.ToList());
+        }
+        return Results.NotFound("Estabelecimentos não encontrado");
+    });
 
 
 //Cadastro de clientes
@@ -262,6 +281,5 @@ app.MapDelete("/api/mesa/deletar/{id}", ([FromRoute] int id,
     return Results.Ok("Mesa deletada");
 });
 
-
-
+app.UseCors("Acesso Total");
 app.Run();

@@ -11,7 +11,7 @@ function EstabelecimentoCadastrar() {
       nome: nome,
       endereco: endereco,
     };
-    fetch("http://localhost:3001/api/estabelecimento/cadastrar", {
+    fetch("http://localhost:5270/api/estabelecimento/cadastrar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
