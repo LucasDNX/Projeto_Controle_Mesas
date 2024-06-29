@@ -10,6 +10,9 @@ Content-Type: application/json
     "endereco" : "rua da graciosa 251"
 }
 
+### Visualização dos clientes cadastrados
+GET {{HostAddress}}/estabelecimento/listar
+
 
 ### Cadastro de cliente
 POST {{HostAddress}}/cliente/cadastrar

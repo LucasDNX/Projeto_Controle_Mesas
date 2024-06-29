@@ -1,23 +1,38 @@
 import React from 'react';
-import { Estabelecimento } from './model/Estabelecimento';
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import EstabelecimentoListar from './components/pages/estabelecimento/estabelecimento-listar';
 import EstabelecimentoCadastrar from './components/pages/estabelecimento/estabelecimento-cadastrar';
-import { BrowserRouter, Link } from 'react-router-dom';
+
 function App() {
   return (
-    <div className="App">
-      <h1>Estrutura inicial</h1>
-      <BrowserRouter>
+    <div>
+    <BrowserRouter>
       <nav>
         <ul>
           <li>
-      
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/estabelecimento/listar">Listar Produtos</Link>
+          </li>
+          <li>
+            <Link to="/estabelecimento/cadastrar">Cadastrar Produtos</Link>
           </li>
         </ul>
       </nav>
-      </BrowserRouter>
-      
-      
-    </div>
+      <Routes>
+        <Route path="/" element={<EstabelecimentoListar />} />
+        <Route path="/estabelecimento/listar" element={<EstabelecimentoListar />} />
+        <Route path="/estabelecimento/cadastrar" element={<EstabelecimentoCadastrar />} />
+        <Route
+          path="/estabelecimento/alterar/:id"
+        />
+      </Routes>
+      <footer>
+        <p>Desenvolvido pelos coleguinhas da UP</p>
+      </footer>
+    </BrowserRouter>
+  </div>
   );
 }
 //<Link>to="/estabelecimento/cadastrar"></Link>
