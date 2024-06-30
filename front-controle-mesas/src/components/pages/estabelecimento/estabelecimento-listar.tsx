@@ -34,12 +34,6 @@ function EstabelecimentoListar() {
                             <td>{estabelecimento.id}</td>
                             <td>{estabelecimento.nome}</td>
                             <td>{estabelecimento.endereco}</td>
-                            <td>
-                                <button>Deletar</button>
-                            </td>
-                            <td>
-                                <button>Editar</button>
-                            </td>
                         </tr>
                     ))}
                     

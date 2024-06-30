@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { Cliente } from "../../../model/Cliente";
 import { Estabelecimento } from "../../../model/Estabelecimento";
+import { Modalidade } from "../../../model/Modalida";
 
-function ClienteCadastrar() {
+function ModalidadeCadastrar() {
   const [nome, setNome] = useState("");
-  const [endereco, setEndereco] = useState("");
-  const [telefone, setTelefone] = useState("");
   const [estabelecimentoId, setEstabelecimentoId] = useState("");
   const [estabelecimentos, setEstabelecimentos] = useState<Estabelecimento[]>([]);
   
@@ -24,48 +22,34 @@ function ClienteCadastrar() {
 
   function cadastrar(e: any) {
     e.preventDefault();
-    const cliente: Cliente = {
+    const modalidade : Modalidade = {
       nome: nome,
-      endereco: endereco,
-      telefone: telefone,
       estabelecimentoId: estabelecimentoId,
 
       
     };
-    fetch("http://localhost:5270/api/cliente/cadastrar", {
+    fetch("http://localhost:5270/api/modalidade-mesa/cadastrar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(cliente),
+      body: JSON.stringify(modalidade),
     })
       .then((resposta) => resposta.json())
-      .then((clienteCadastrado: Cliente) => {
-        console.log(clienteCadastrado);
+      .then((modalidadeCadastrado: Modalidade) => {
+        console.log(modalidadeCadastrado);
       });
   }
 
   return (
     <div>
-      <h1>Cadastrar Cliente</h1>
+      <h1>Cadastrar modalidade</h1>
       <form onSubmit={cadastrar}>
         <label>Nome:</label>
         <input
           type="text"
           onChange={(e: any) => setNome(e.target.value)}
           required
-        />{" "}
-        <br />
-        <label>Endereco:</label>
-        <input
-          type="text"
-          onChange={(e: any) => setEndereco(e.target.value)}
-        />{" "}
-        <br />
-        <label>Telefone:</label>
-        <input
-          type="text"
-          onChange={(e: any) => setTelefone(e.target.value)}
         />{" "}
         <br />
         <label>Estabelecimentos:</label>
@@ -83,4 +67,4 @@ function ClienteCadastrar() {
   );
 }
 
-export default ClienteCadastrar;
+export default ModalidadeCadastrar;

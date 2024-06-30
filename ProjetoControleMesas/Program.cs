@@ -213,6 +213,17 @@ app.MapPost("/api/modalidade-mesa/cadastrar", ([FromBody] Modalidade modalidade,
     return Results.BadRequest("A modalidade ja foi cadastrada.");
 });
 
+//Visualização de modalidade
+app.MapGet("/api/modalidade/listar", ([FromServices] AppDbContext context) =>
+    {
+        if (context.Modalidades.Any())
+        {
+            return Results.Ok(context.Modalidades.ToList());
+        }
+        return Results.NotFound("Modalidades não encontrado");
+    });
+
+
 
 //Cadastro de mesas
 app.MapPost("/api/mesas/cadastrar", ([FromBody] Mesa mesa, [FromServices] AppDbContext context) =>

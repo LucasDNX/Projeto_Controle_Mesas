@@ -4,4 +4,5 @@ export interface Cliente{
     endereco: string;
     telefone: string;
     criadoEm?: string;
+    estabelecimentoId?: string;
 }
