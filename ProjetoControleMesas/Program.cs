@@ -52,6 +52,40 @@ app.MapGet("/api/estabelecimento/listar", ([FromServices] AppDbContext context) 
         return Results.NotFound("Estabelecimentos não encontrado");
     });
 
+//Busca pelo Estabelecimento pelo Id
+app.MapGet("/api/estabelecimento/buscar/{id}", ([FromRoute] int id,
+    [FromServices] AppDbContext context) =>
+{
+    Estabelecimento? estabelecimento = context.Estabelecimentos.FirstOrDefault(x => x.Id == id);
+
+    if (estabelecimento is null)
+    {
+        return Results.NotFound("Estabelecimento não encontrado!");
+    }
+    return Results.Ok(estabelecimento);
+});
+
+//Altera estabelecimento pelo Id
+app.MapPut("/api/estabelecimento/alterar/{id}", ([FromRoute] int id,
+    [FromBody] Estabelecimento estabelecimentoAlterado,
+    [FromServices] AppDbContext context) =>
+{   
+    Estabelecimento? estabelecimento = context.Estabelecimentos.Find(id);
+
+    if (estabelecimento is null)
+    {
+        return Results.NotFound("Estabelecimento não encontrado!");
+    }
+
+    estabelecimento.Nome = estabelecimentoAlterado.Nome;
+    estabelecimento.Endereco = estabelecimentoAlterado.Endereco;
+
+    context.Estabelecimentos.Update(estabelecimento);
+    context.SaveChanges();
+
+    return Results.Ok("Estabelecimento alterado com sucesso!");
+});
+
 
 //Cadastro de clientes
 app.MapPost("/api/cliente/cadastrar", ([FromBody] Cliente cliente,
@@ -178,6 +212,17 @@ app.MapPost("/api/modalidade-mesa/cadastrar", ([FromBody] Modalidade modalidade,
     }
     return Results.BadRequest("A modalidade ja foi cadastrada.");
 });
+
+//Visualização de modalidade
+app.MapGet("/api/modalidade/listar", ([FromServices] AppDbContext context) =>
+    {
+        if (context.Modalidades.Any())
+        {
+            return Results.Ok(context.Modalidades.ToList());
+        }
+        return Results.NotFound("Modalidades não encontrado");
+    });
+
 
 
 //Cadastro de mesas
