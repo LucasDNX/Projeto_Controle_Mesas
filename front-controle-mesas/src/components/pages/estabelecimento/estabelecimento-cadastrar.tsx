@@ -21,6 +21,7 @@ function EstabelecimentoCadastrar() {
       .then((resposta) => resposta.json())
       .then((estabelecimentoCadastrado: Estabelecimento) => {
         console.log(estabelecimentoCadastrado);
+        window.location.href = "http://localhost:3000/estabelecimento/listar";
       });
   }
 

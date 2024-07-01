@@ -45,7 +45,7 @@ function App() {
         <Route path="/estabelecimento/alterar" element={<EstabelecimentoAlterar />} />
         <Route path="/cliente/cadastrar" element={<ClienteCadastrar />} />
         <Route path="/cliente/listar" element={<ClienteListar />} />
-        <Route path="/cliente/alterar" element={<ClienteAlterar />} />
+        <Route path="/cliente/atualizar/:id" element={<ClienteAlterar />} />
         <Route path="/modalidade/cadastrar" element={<ModalidadeCadastrar />} />
         <Route path="/mesa/cadastrar" element={<MesaCadastrar />} />
         

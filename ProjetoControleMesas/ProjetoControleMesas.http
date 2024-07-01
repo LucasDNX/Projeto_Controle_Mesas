@@ -44,6 +44,9 @@ Content-Type: application/json
     "Telefone" : "4198453-5342"
 }
 
+### Deletar cliente
+DELETE {{HostAddress}}/cliente/deletar/1
+
 
 ### Cadastro de modalidades de mesa
 POST {{HostAddress}}/modalidade-mesa/cadastrar

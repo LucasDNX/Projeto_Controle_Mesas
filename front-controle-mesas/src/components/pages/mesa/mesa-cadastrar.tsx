@@ -95,7 +95,7 @@ function MesaCadastrar() {
           ))}
         </select>
         <br />
-        <button type="submit">Cadastrar</button>
+        <button type="submit" >Cadastrar</button>
       </form>
     </div>
   );

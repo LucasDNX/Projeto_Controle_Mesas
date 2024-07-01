@@ -1,5 +1,5 @@
 
-
+import '../../../css/style.css';
 import { useEffect, useState } from "react";
 import { Estabelecimento } from "../../../model/Estabelecimento";
 import { useParams, useNavigate } from "react-router-dom";

@@ -42,6 +42,7 @@ function ClienteCadastrar() {
       .then((resposta) => resposta.json())
       .then((clienteCadastrado: Cliente) => {
         console.log(clienteCadastrado);
+        window.location.href = "http://localhost:3000/cliente/listar";
       });
   }
 

@@ -178,6 +178,20 @@ app.MapPut("/api/cliente/atualizar/{Id}", ([FromRoute] int id, [FromBody] Client
     return Results.Ok(clienteExistente);
 });
 
+app.MapDelete("/api/cliente/deletar/{id}", ([FromRoute] int id,
+    [FromServices] AppDbContext context) =>
+{
+    Cliente? cliente = context.Clientes.Find(id);
+
+    if (cliente is null)
+    {
+        return Results.NotFound("cliente não encontrada!");
+    }
+    context.Clientes.Remove(cliente);
+    context.SaveChanges();
+    return Results.Ok("cliente deletada");
+});
+
 
 //Cadastro de modalidades de mesa
 app.MapPost("/api/modalidade-mesa/cadastrar", ([FromBody] Modalidade modalidade,
